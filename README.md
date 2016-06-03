@@ -1,3 +1,6 @@
 # sima_dev
 
-TEST YA asas
+TEST YA
+
+
+APLIKASI .. 

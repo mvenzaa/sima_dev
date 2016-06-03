@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
-        setTitle("Stop ");
+        setTitle("Stop Narkoba");
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);

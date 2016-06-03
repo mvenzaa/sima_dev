@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home">
+        <menu>
+        <item
+            android:id="@+id/artikel"
+            android:icon="@drawable/ic_terpopuler"
+            android:title="Artikel" />
+        <item
+            android:id="@+id/video"
+            android:icon="@drawable/ic_video"
+            android:title="Video" />
+        <item
+            android:id="@+id/warga"
+            android:icon="@drawable/ic_warga"
+            android:title="Warga" />
+
+            <item
+            android:id="@+id/daftar"
+            android:icon="@drawable/ic_pilihan"
+            android:title="Daftar" />
+
+
+        </menu>
+    </item>
+
+
+    <item android:title="Lainnya">
+        <menu>
+
+            <item
+                android:id="@+id/nav_streaming"
+                android:icon="@drawable/ic_streaming"
+                android:title="Streaming" />
+
+            <item
+                android:id="@+id/nav_visit"
+                android:icon="@drawable/ic_visit"
+                android:title="Visit Web" />
+
+        </menu>
+    </item>
+
+
+
+</menu>

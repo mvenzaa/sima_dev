@@ -17,19 +17,6 @@
             android:title="Warga" />
 
             <item
-            android:id="@+id/daftar"
-            android:icon="@drawable/ic_pilihan"
-            android:title="Daftar" />
-
-
-        </menu>
-    </item>
-
-
-    <item android:title="Lainnya">
-        <menu>
-
-            <item
                 android:id="@+id/nav_streaming"
                 android:icon="@drawable/ic_streaming"
                 android:title="Streaming" />
@@ -38,6 +25,12 @@
                 android:id="@+id/nav_visit"
                 android:icon="@drawable/ic_visit"
                 android:title="Visit Web" />
+
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Keluar"
+                android:visible="false"/>
 
         </menu>
     </item>

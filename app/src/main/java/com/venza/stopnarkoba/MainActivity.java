@@ -3,28 +3,35 @@ package com.venza.stopnarkoba;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
-import com.venza.stopnarkoba.fragment.VideoFragment;
-import com.venza.stopnarkoba.fragment.WargaFragment;
 import com.venza.stopnarkoba.fragment.ArtikelFragment;
 import com.venza.stopnarkoba.fragment.StreamingFragment;
+import com.venza.stopnarkoba.fragment.VideoFragment;
+import com.venza.stopnarkoba.fragment.WargaFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     NavigationView navigationView = null;
     Toolbar toolbar = null;
+    private final int MenuItem_LoginId = 378;
+    private final int MenuItem_LogoutId = 379;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +57,11 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        pref = getSharedPreferences("stopnarkoba", MODE_PRIVATE);
+        setHeaderNavigation();
+        setMenuNavigation();
     }
 
     @Override
@@ -89,6 +101,12 @@ public class MainActivity extends AppCompatActivity
         };
         searchView.setOnQueryTextListener(queryTextListener);
 
+        String is_login = pref.getString("is_login", null);
+        if (is_login != null) {
+            MenuItem menu_login = menu.findItem(R.id.action_login);
+            menu_login.setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -113,6 +131,8 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+
+
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
@@ -143,12 +163,6 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
             setTitle("Warga");
 
-        } else if (id == R.id.daftar) {
-
-            Intent i = new Intent(MainActivity.this, SignupActivity.class);
-            startActivity(i);
-            return true;
-
         } else if (id == R.id.nav_streaming) {
 
             StreamingFragment fragment = new StreamingFragment();
@@ -163,10 +177,55 @@ public class MainActivity extends AppCompatActivity
             startActivity(google);
             return true;
 
+        }  else if (id == R.id.logout) {
+            pref.edit().clear().commit();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
+            return true;
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+
+    public void setHeaderNavigation(){
+        String is_login = pref.getString("is_login", null);
+        if (is_login != null) {
+            View nav_header = LayoutInflater.from(this).inflate(R.layout.nav_header_login, null);
+            TextView  name = ((TextView) nav_header.findViewById(R.id.name));
+            name.setText(pref.getString("name", ""));
+
+            // set image di sini
+            //ImageView imageView = (ImageView)nav_header.findViewById(R.id.imageView);
+
+
+            navigationView.addHeaderView(nav_header);
+        }else {
+            View nav_header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+            TextView text_login = ((TextView) nav_header.findViewById(R.id.text_login));
+            text_login.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+            });
+            navigationView.addHeaderView(nav_header);
+        }
+    }
+
+
+    public void setMenuNavigation(){
+        String is_login = pref.getString("is_login", null);
+        if (is_login != null) {
+            Menu menu = navigationView.getMenu();
+            MenuItem nav_logout = menu.findItem(R.id.logout);
+            nav_logout.setVisible(true);
+        }
     }
 }

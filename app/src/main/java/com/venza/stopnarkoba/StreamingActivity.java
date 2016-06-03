@@ -28,10 +28,8 @@ import com.thefinestartist.ytpa.enums.Orientation;
 import com.venza.stopnarkoba.adapter.VideoListAdapter;
 import com.venza.stopnarkoba.app.AppController;
 import com.venza.stopnarkoba.fragment.StreamingFragment;
-import com.venza.stopnarkoba.fragment.VideoFragment;
 import com.venza.stopnarkoba.model.video;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -223,11 +221,11 @@ public class StreamingActivity extends AppCompatActivity{
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_login) {
-            Intent i = new Intent(StreamingActivity.this, LoginActivity.class);
-            startActivity(i);
-            return true;
-        }
+//        if (id == R.id.action_login) {
+//            Intent i = new Intent(StreamingActivity.this, LoginActivity.class);
+//            startActivity(i);
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 }

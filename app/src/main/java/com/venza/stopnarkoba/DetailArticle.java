@@ -1,38 +1,24 @@
 package com.venza.stopnarkoba;
 
 import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.view.Menu;
 import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.venza.stopnarkoba.adapter.ArticleDetailAdapter;
 import com.venza.stopnarkoba.app.AppController;
-import com.venza.stopnarkoba.fragment.ArtikelFragment;
-import com.venza.stopnarkoba.fragment.VideoFragment;
 import com.venza.stopnarkoba.model.article;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -146,51 +132,6 @@ public class DetailArticle extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-                .getActionView();
-        if (null != searchView) {
-            searchView.setSearchableInfo(searchManager
-                    .getSearchableInfo(getComponentName()));
-            searchView.setIconifiedByDefault(true);
-        }
 
-        SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
-            public boolean onQueryTextChange(String newText) {
-                return true;
-            }
-
-            public boolean onQueryTextSubmit(String query) {
-                Intent i = new Intent(getApplicationContext(), ArtikelFragment.class);
-                i.putExtra("key", query);
-                startActivity(i);
-                return true;
-            }
-        };
-        searchView.setOnQueryTextListener(queryTextListener);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_login) {
-            Intent i = new Intent(DetailArticle.this, LoginActivity.class);
-            startActivity(i);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
 }

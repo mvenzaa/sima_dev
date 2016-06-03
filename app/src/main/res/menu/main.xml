@@ -4,14 +4,15 @@
     <item
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="always"
+        android:title="Search"
         app:actionViewClass="android.support.v7.widget.SearchView"
-        android:title="Search"/>
+        app:showAsAction="always" />
 
 
-            <item
-                android:id="@+id/action_login"
-                app:showAsAction="always"
-                android:title="LOGIN"/>
+    <item
+        android:id="@+id/action_login"
+        android:icon="@drawable/ic_user"
+        android:title="Login"
+        app:showAsAction="always" />
 
-        </menu>
+</menu>

@@ -3,24 +3,17 @@ package com.venza.stopnarkoba;
 /**
  * Created by Probook 4341s on 5/20/2016.
  */
-import android.content.IntentSender;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -28,11 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -41,7 +30,6 @@ import com.venza.stopnarkoba.app.AppController;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -130,20 +118,31 @@ public class LoginActivity extends AppCompatActivity {
                             if(res.getString("status").equals("error")){
                                 data = "";
                                 superActivityToast.setBackground(SuperToast.Background.RED);
+                                String  msg = res.getString("message");
+                                _loginButton.setEnabled(true);
+                                _emailText.setEnabled(true);
+                                _passwordText.setEnabled(true);
+
+                                superActivityToast.setText(msg + " " + data);
+                                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                                superActivityToast.setTextColor(Color.WHITE);
+                                superActivityToast.setTouchToDismiss(true);
+                                superActivityToast.show();
                             }else{
                                 superActivityToast.setBackground(SuperToast.Background.GREEN);
-                                data = res.getString("data");
+                                JSONObject data = new JSONObject(res.getString("data"));
+                                SharedPreferences.Editor editor = getSharedPreferences("stopnarkoba", MODE_PRIVATE).edit();
+                                editor.putString("name", data.getString("name"));
+                                editor.putString("email", data.getString("email"));
+                                editor.putString("token", data.getString("token"));
+                                editor.putString("is_login", "1");
+                                editor.commit();
+                                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(i);
                             }
-                            String  msg = res.getString("message");
-                            _loginButton.setEnabled(true);
-                            _emailText.setEnabled(true);
-                            _passwordText.setEnabled(true);
 
-                            superActivityToast.setText(msg + " " + data);
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
+
 
 //                            Toast.makeText(getApplicationContext(), msg + " " + data,
 //                                    Toast.LENGTH_SHORT).show();

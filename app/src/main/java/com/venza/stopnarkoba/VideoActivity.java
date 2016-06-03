@@ -1,20 +1,10 @@
 package com.venza.stopnarkoba;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.thefinestartist.ytpa.YouTubePlayerActivity;
-import com.thefinestartist.ytpa.enums.Orientation;
-import com.venza.stopnarkoba.fragment.VideoFragment;
-import com.venza.stopnarkoba.model.video;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -23,26 +13,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-
-
+import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.youtube.player.YouTubePlayer;
-
 import com.thefinestartist.ytpa.YouTubePlayerActivity;
 import com.thefinestartist.ytpa.enums.Orientation;
-import com.venza.stopnarkoba.adapter.VideoDetailAdapter;
 import com.venza.stopnarkoba.adapter.VideoListAdapter;
 import com.venza.stopnarkoba.app.AppController;
+import com.venza.stopnarkoba.fragment.VideoFragment;
 import com.venza.stopnarkoba.model.video;
 
 import org.json.JSONArray;
@@ -260,11 +245,11 @@ public class VideoActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_login) {
-            Intent i = new Intent(VideoActivity.this, LoginActivity.class);
-            startActivity(i);
-            return true;
-        }
+//        if (id == R.id.action_login) {
+//            Intent i = new Intent(VideoActivity.this, LoginActivity.class);
+//            startActivity(i);
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 

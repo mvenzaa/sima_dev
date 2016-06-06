@@ -129,7 +129,7 @@ public class FacebookLogin {
                                 Log.d("SN2", profile.toString());
                                 SharedPreferences.Editor editor = activity.getSharedPreferences("stopnarkoba", activity.MODE_PRIVATE).edit();
                                 editor.putString("name", profile.getString("name"));
-                                editor.putString("email", profile.getString("email"));
+                                editor.putString("email", user.getString("email"));
                                 editor.putString("token", user.getString("auth_key"));
                                 editor.putString("is_login", "1");
                                 editor.commit();

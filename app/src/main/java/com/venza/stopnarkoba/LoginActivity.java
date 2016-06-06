@@ -151,11 +151,14 @@ public class LoginActivity extends AppCompatActivity {
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(i);
                             }
+<<<<<<< HEAD
 
 /*<<<<<<< HEAD
 
 =======
 >>>>>>> upstream/master*/
+=======
+>>>>>>> upstream/master
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

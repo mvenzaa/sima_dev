@@ -152,7 +152,10 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(i);
                             }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/master
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

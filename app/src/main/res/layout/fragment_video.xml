@@ -26,7 +26,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
+    <com.costum.android.widget.PullAndLoadListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

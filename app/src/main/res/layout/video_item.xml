@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
     <com.android.volley.toolbox.NetworkImageView
         android:id="@+id/image_small"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="8dp" />
 
@@ -29,6 +44,7 @@
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/image_small"
         android:textSize="@dimen/title"
+        android:textColor="#000000"
         android:textStyle="bold" />
 
 
@@ -68,7 +84,6 @@
         android:layout_marginTop="5dp"
         android:layout_toRightOf="@+id/image_small"
         android:textColor="@color/content"
-        android:textStyle="bold"
         android:textSize="@dimen/content"
 
         />
@@ -82,6 +97,10 @@
         android:textSize="@dimen/ID"
         android:visibility="gone"
         />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 
 </RelativeLayout>

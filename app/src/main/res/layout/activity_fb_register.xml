@@ -3,12 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#FFF">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
         android:paddingRight="24dp">
@@ -16,19 +19,21 @@
 
 
         <ImageView android:src="@drawable/header_background"
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+
             android:text="Tinggal Satu Langkah Lagi ..."
             android:id="@+id/textView"
+            android:textSize="16dp"
             android:layout_gravity="center_horizontal"
             android:textColor="#1E90FF"
+            android:layout_marginBottom="24dp"
             android:textStyle="bold"/>
 
         <!--  Name Label -->

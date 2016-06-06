@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         LoginButton login_button = (LoginButton)findViewById(R.id.login_button);
         auth_layout = (LinearLayout)findViewById(R.id.auth_layout);
-        FacebookLogin.init(callbackManager,login_button,this,auth_layout);
+        FacebookLogin.init(callbackManager, login_button, this, auth_layout);
 
 
         _loginButton = (Button) findViewById(R.id.btn_login);
@@ -100,6 +100,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_SIGNUP);
             }
         });
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            SuperActivityToast superActivityToast = new SuperActivityToast(LoginActivity.this);
+            superActivityToast.setText("Anda Berhasil Mendaftar Silakan Login");
+            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+            superActivityToast.setTextColor(Color.WHITE);
+            superActivityToast.setTouchToDismiss(true);
+            superActivityToast.show();
+            superActivityToast.setBackground(SuperToast.Background.GREEN);
+        }
     }
 
 
@@ -129,7 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                                 superActivityToast.setTouchToDismiss(true);
                                 superActivityToast.show();
                             }else{
-                                superActivityToast.setBackground(SuperToast.Background.GREEN);
                                 JSONObject data = new JSONObject(res.getString("data"));
                                 SharedPreferences.Editor editor = getSharedPreferences("stopnarkoba", MODE_PRIVATE).edit();
                                 editor.putString("name", data.getString("name"));
@@ -142,12 +152,6 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(i);
                             }
 
-
-
-//                            Toast.makeText(getApplicationContext(), msg + " " + data,
-//                                    Toast.LENGTH_SHORT).show();
-//                            mToast.setText("This is a");
-//                            mToast.show();
 
                         } catch (JSONException e) {
                             e.printStackTrace();

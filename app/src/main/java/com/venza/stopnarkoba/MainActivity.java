@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.venza.stopnarkoba.fragment.ArtikelFragment;
 import com.venza.stopnarkoba.fragment.StreamingFragment;
 import com.venza.stopnarkoba.fragment.VideoFragment;
@@ -179,6 +181,9 @@ public class MainActivity extends AppCompatActivity
 
         }  else if (id == R.id.logout) {
             pref.edit().clear().commit();
+            FacebookSdk.sdkInitialize(getApplicationContext());
+            LoginManager.getInstance().logOut();
+
             Intent intent = getIntent();
             finish();
             startActivity(intent);

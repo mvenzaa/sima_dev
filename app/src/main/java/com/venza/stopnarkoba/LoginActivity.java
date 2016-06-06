@@ -142,13 +142,6 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(i);
                             }
 
-
-
-//                            Toast.makeText(getApplicationContext(), msg + " " + data,
-//                                    Toast.LENGTH_SHORT).show();
-//                            mToast.setText("This is a");
-//                            mToast.show();
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

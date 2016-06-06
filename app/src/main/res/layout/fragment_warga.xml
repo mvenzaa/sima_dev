@@ -25,7 +25,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <ListView
+    <com.costum.android.widget.PullAndLoadListView
         android:id="@+id/list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -33,6 +33,6 @@
         android:layout_marginTop="10dp"
         android:dividerHeight="0dp"
         android:listSelector="@drawable/list_row_selector"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.design.widget.CoordinatorLayout>

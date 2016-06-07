@@ -1,10 +1,18 @@
 [
     {
+        "merged": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_pulltorefresh_arrow.png",
+        "source": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_pulltorefresh_arrow.png"
+    },
+    {
         "merged": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
         "source": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
     },
     {
         "merged": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_pulltorefresh_arrow.png",
         "source": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_pulltorefresh_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
     }
 ]

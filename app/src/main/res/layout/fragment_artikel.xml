@@ -28,11 +28,10 @@
 
     <com.costum.android.widget.PullAndLoadListView
         android:id="@+id/list"
-        android:layout_marginTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"
         android:dividerHeight="0dp"
-        android:listSelector="@drawable/list_row_selector" />
+        android:padding="5dp"
+         />
 
 </android.support.design.widget.CoordinatorLayout>

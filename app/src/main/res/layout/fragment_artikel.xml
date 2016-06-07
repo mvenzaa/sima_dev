@@ -31,7 +31,12 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="0dp"
+<<<<<<< HEAD
         android:padding="5dp"
          />
+=======
+        android:listSelector="@drawable/list_row_selector"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+>>>>>>> upstream/master
 
 </android.support.design.widget.CoordinatorLayout>

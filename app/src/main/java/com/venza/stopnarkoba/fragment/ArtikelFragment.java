@@ -86,7 +86,6 @@ public class ArtikelFragment extends Fragment {
                     public void onRefresh() {
                         // Do work to refresh the list here.
                         url_page_default = 1;
-                        listView.setPadding(10,120,10,10);
                         list("refresh");
                     }
                 });

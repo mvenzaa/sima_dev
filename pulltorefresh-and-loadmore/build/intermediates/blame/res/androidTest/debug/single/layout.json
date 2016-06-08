@@ -1,5 +1,13 @@
 [
     {
+        "merged": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\load_more_footer.xml",
+        "source": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\layout\\load_more_footer.xml"
+    },
+    {
+        "merged": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header.xml",
+        "source": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header.xml"
+    },
+    {
         "merged": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header.xml",
         "source": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header.xml"
     },

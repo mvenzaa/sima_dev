@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\costum_progress_bar.xml",
         "source": "C:\\Users\\ASUS\\Documents\\android-project\\WORK\\stopnarkoba\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable\\costum_progress_bar.xml"
+    },
+    {
+        "merged": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\costum_progress_bar.xml",
+        "source": "D:\\android\\sima_dev\\pulltorefresh-and-loadmore\\build\\intermediates\\bundles\\debug\\res\\drawable\\costum_progress_bar.xml"
     }
 ]

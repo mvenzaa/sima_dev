@@ -18,7 +18,7 @@
             <item
                 android:id="@+id/nav_streaming"
                 android:icon="@drawable/ic_streaming"
-                android:title="Streaming" />
+                android:title="Live Streaming" />
 
             <item
                 android:id="@+id/nav_visit"
@@ -29,7 +29,7 @@
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_logout"
                 android:title="Keluar"
-                android:visible="false"/>
+                android:visible="false" />
 
 
 </menu>

@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_frame, fragment);
             fragmentTransaction.commit();
-            setTitle("Stop Narkoba!");
+            setTitle("Stop Narkoba");
 
         } else if (id == R.id.video) {
 
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity
                     getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.content_frame, fragment);
             fragmentTransaction.commit();
-            setTitle("Streaming");
+            setTitle("Live Streaming");
 
         } else if (id == R.id.nav_visit) {
             Intent google = new Intent(Intent.ACTION_VIEW, Uri.parse("http://stopnarkoba.id/"));

@@ -23,66 +23,66 @@
             android:padding="5dp"
             >
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:id="@+id/image_small"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="8dp" />
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/image_small"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="8dp" />
 
 
-    <TextView
-        android:id="@+id/ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/image_small"
-        android:layout_toRightOf="@+id/image_small"
-        android:textSize="@dimen/ID"
-        android:visibility="gone"/>
+        <TextView
+            android:id="@+id/ID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/image_small"
+            android:layout_toRightOf="@+id/image_small"
+            android:textSize="@dimen/ID"
+            android:visibility="gone" />
 
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ID"
-        android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/image_small"
-        android:textSize="@dimen/title"
-        android:textColor="#000000"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ID"
+            android:layout_marginTop="1dip"
+            android:layout_toRightOf="@+id/image_small"
+            android:textColor="#000000"
+            android:textSize="@dimen/title"
+            android:textStyle="bold" />
 
 
-    <TextView
-        android:id="@+id/content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/title"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/image_small"
-        android:textColor="@color/content"
-        android:textStyle="bold"
-        android:textSize="@dimen/author"
-        android:visibility="gone"
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/image_small"
+            android:textColor="@color/content"
+            android:textSize="@dimen/author"
+            android:textStyle="bold"
+            android:visibility="gone"
 
-        />
+            />
 
 
-    <TextView
-        android:id="@+id/created_at"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/content"
-        android:layout_marginTop="5dp"
-        android:layout_toRightOf="@+id/image_small"
-        android:textColor="@color/content"
-        android:textSize="@dimen/content"
+        <TextView
+            android:id="@+id/created_at"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/image_small"
+            android:textColor="@color/content"
+            android:textSize="@dimen/content"
 
-        />
+            />
 
-        </RelativeLayout>
+    </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
-
+</android.support.v7.widget.CardView>
 
 </LinearLayout>

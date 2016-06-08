@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity
     private final int MenuItem_LoginId = 378;
     private final int MenuItem_LogoutId = 379;
     SharedPreferences pref;
-
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.content_frame, fragment);
         fragmentTransaction.commit();
         setTitle("Stop Narkoba");
+
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,6 +65,22 @@ public class MainActivity extends AppCompatActivity
         pref = getSharedPreferences("stopnarkoba", MODE_PRIVATE);
         setHeaderNavigation();
         setMenuNavigation();
+
+//        TEST AMBIL HASH KEY
+//        try {
+//            PackageInfo info = context.getPackageManager()
+//            .getPackageInfo("com.venza.stopnarkoba", PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch(PackageManager.NameNotFoundException e){
+//
+//        }  catch (NoSuchAlgorithmException e) {
+//
+//        }
+
     }
 
     @Override

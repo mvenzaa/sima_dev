@@ -12,13 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.android.volley.VolleyLog;
-import com.costum.android.widget.PullAndLoadListView;
-import com.costum.android.widget.PullToRefreshListView;
-
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.costum.android.widget.PullAndLoadListView;
+import com.costum.android.widget.PullToRefreshListView;
 import com.venza.stopnarkoba.DetailArticle;
 import com.venza.stopnarkoba.R;
 import com.venza.stopnarkoba.adapter.ArticleListAdapter;
@@ -44,14 +43,15 @@ public class ArtikelFragment extends Fragment {
 
     // Movies json url
     private static final String url = "http://stopnarkoba.id/service/artikels?page=";
-    private Integer url_page_default = 0;
+    private Integer url_page_default = 1;
     private ProgressDialog pDialog;
     private List<article> articleList = new ArrayList<article>();
     private ListView listView;
     private ArticleListAdapter adapter;
 
 
-    public ArtikelFragment(){}
+    public ArtikelFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,7 +70,6 @@ public class ArtikelFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> av, View v, int pos,
                                     long id) {
-
                 TextView c = (TextView) v.findViewById(R.id.ID);
                 String articleID = c.getText().toString();
                 Intent i = new Intent(getActivity().getApplicationContext(), DetailArticle.class);
@@ -78,199 +77,77 @@ public class ArtikelFragment extends Fragment {
                 startActivity(i);
             }
         });
-
         pDialog = new ProgressDialog(getActivity());
-        // Showing progress dialog before making http request
         pDialog.setMessage("Loading...");
         pDialog.show();
-        listDefault();
-
+        list("default");
         ((PullAndLoadListView) listView)
                 .setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-
                     public void onRefresh() {
                         // Do work to refresh the list here.
-                        url_page_default = 0;
-                        listRefresh();
+                        url_page_default = 1;
+                        list("refresh");
                     }
                 });
-
-        // set a listener to be invoked when the list reaches the end
         ((PullAndLoadListView) listView)
                 .setOnLoadMoreListener(new PullAndLoadListView.OnLoadMoreListener() {
-
                     public void onLoadMore() {
-                        // Do the work to load more items at the end of list
-                        // here
                         url_page_default = url_page_default + 1;
-                        listMore(url_page_default);
+                        list("loadmore");
                     }
                 });
 
         return rootView;
     }
 
-    public void listDefault() {
+    public void list(final String type) {
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url + String.valueOf(url_page_default),
-
-                new Response.Listener<JSONArray>() {
+        JsonObjectRequest movieReq = new JsonObjectRequest(Request.Method.GET,
+                url + String.valueOf(url_page_default), null,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
+                    public void onResponse(JSONObject response) {
                         hidePDialog();
-                        Log.d("SN",response.toString());
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++)  {
-                            try {
 
-                                JSONObject obj = response.getJSONObject(i);
-                                article a = new article();
-                                a.setImage_small_Url(obj.getString("image_small"));
-                                a.setID(obj.getInt("id"));
-                                a.setTitle(obj.getString("title"));
-                                a.setCreated_at(obj.getString("created_at"));
-
-
-                                // adding movie to movies array
-                                articleList.add(a);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("SN", response.toString());
+                        try {
+                            if(type == "refresh"){
+                                articleList.clear();
                             }
-
+                            JSONObject meta = response.getJSONObject("_meta");
+                            Log.d("pageCount",url_page_default.toString()+" vs "+meta.getString("pageCount"));
+                            if (url_page_default <= meta.getInt("pageCount")) {
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i = 0; i < items.length(); i++) {
+                                    JSONObject obj = items.getJSONObject(i);
+                                    article art = new article();
+                                    art.setImage_small_Url(obj.getString("image_small"));
+                                    art.setID(obj.getInt("id"));
+                                    art.setTitle(obj.getString("title"));
+                                    art.setCreated_at(obj.getString("created_at"));
+                                    articleList.add(art);
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                            if(type == "refresh"){
+                                ((PullAndLoadListView) listView).onRefreshComplete();
+                            }else{
+                                if (url_page_default >= meta.getInt("pageCount")) {
+                                    ((PullAndLoadListView) listView).onLoadMoreComplete();
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                        ((PullAndLoadListView) listView).onRefreshComplete();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-//               Log.d("SN", error.getMessage());
-                hidePDialog();
-
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq, "SN");
-
-    }
-
-    public void listRefresh() {
-        // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url + String.valueOf(url_page_default),
-
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        hidePDialog();
-                        Log.d("SN",response.toString());
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++)  {
-                            try {
-
-                                JSONObject obj = response.getJSONObject(i);
-                                article a = new article();
-                                a.setImage_small_Url(obj.getString("image_small"));
-                                a.setID(obj.getInt("id"));
-                                a.setTitle(obj.getString("title"));
-                                a.setCreated_at(obj.getString("created_at"));
-                                //a.setContent(obj.getString("content"));
-
-
-
-                                // adding movie to movies array
-                                articleList.add(a);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("SN", response.toString());
-                            }
-
-                        }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                        ((PullAndLoadListView) listView).onRefreshComplete();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
                 //Log.d("SN", error.getMessage());
                 hidePDialog();
-
             }
         });
-
-        // Adding request to request queue
         AppController.getInstance().addToRequestQueue(movieReq, "SN");
-
     }
-
-    public void listMore(Integer url_page_default) {
-        // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url + String.valueOf(url_page_default),
-
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d(TAG, response.toString());
-                        hidePDialog();
-                        Log.d("SN",response.toString());
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++)  {
-                            try {
-
-                                JSONObject obj = response.getJSONObject(i);
-                                article a = new article();
-                                a.setImage_small_Url(obj.getString("image_small"));
-                                a.setID(obj.getInt("id"));
-                                a.setTitle(obj.getString("title"));
-                                a.setCreated_at(obj.getString("created_at"));
-                                //a.setContent(obj.getString("content"));
-
-
-
-                                // adding movie to movies array
-                                articleList.add(a);
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                Log.d("SN", response.toString());
-                            }
-
-                        }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                        ((PullAndLoadListView) listView).onRefreshComplete();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                //Log.d("SN", error.getMessage());
-                hidePDialog();
-
-            }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq, "SN");
-
-    }
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -283,7 +160,6 @@ public class ArtikelFragment extends Fragment {
             pDialog = null;
         }
     }
-
 
 
 }

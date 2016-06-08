@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -23,6 +24,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.youtube.player.YouTubePlayer;
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 import com.thefinestartist.ytpa.YouTubePlayerActivity;
 import com.thefinestartist.ytpa.enums.Orientation;
 import com.venza.stopnarkoba.adapter.VideoListAdapter;
@@ -50,13 +52,13 @@ public class VideoActivity extends AppCompatActivity {
 
     // Movies json url
     private static final String url = "http://stopnarkoba.id/service/videos/";
-    private ProgressDialog pDialog;
-    private List<video> videoList = new ArrayList<video>();
-    private ListView listView;
     NetworkImageView image;
     private VideoListAdapter adapter;
 
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+    ProgressBar bar;
+    ParallaxScrollView content_artikel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,18 +68,14 @@ public class VideoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        content_artikel = (ParallaxScrollView)findViewById(R.id.content_artikel);
+        bar = (ProgressBar) findViewById(R.id.loading_progress);
+        bar.setVisibility(View.VISIBLE);
+        content_artikel.setVisibility(View.GONE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Video");
 
-        listView = (ListView) findViewById(R.id.list);
-        adapter = new VideoListAdapter(this, videoList);
-        listView.setAdapter(adapter);
-
-
-        pDialog = new ProgressDialog(this);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
 
         ID = (TextView) findViewById(R.id.ID);
         title = (TextView) findViewById(R.id.title);
@@ -100,7 +98,6 @@ public class VideoActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        hidePDialog();
                         Log.d("SN", response.toString());
 
                             try {
@@ -111,6 +108,10 @@ public class VideoActivity extends AppCompatActivity {
                                 imageLoader.get(response.getString("image_large"), ImageLoader.getImageListener(image,
                                         R.mipmap.ic_launcher, R.mipmap.ic_launcher));
                                 image.setImageUrl(response.getString("image_large"), imageLoader);
+
+                                bar.setVisibility(View.GONE);
+                                content_artikel.setVisibility(View.VISIBLE);
+
                                 final String youtube_id = response.getString("youtube_id");
                                 image.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -119,25 +120,6 @@ public class VideoActivity extends AppCompatActivity {
                                     }
                                 });
 
-                                // Creating volley request obj
-                                JSONArray RandomPostArr = response.getJSONArray("randomPost");
-                                for (int i = 0; i < RandomPostArr.length(); i++) {
-
-                                    JSONObject obj = RandomPostArr.getJSONObject(i);
-                                    video v = new video();
-                                    int ID = obj.getInt("id");
-                                    String title = obj.getString("title");
-                                    String created_at = obj.getString("created_at");
-                                    String image_small = obj.getString("image_small");
-
-                                    v.setID(ID);
-                                    v.setTitle(title);
-                                    v.setCreated_at(created_at);
-                                    v.setImage_small_Url(image_small);
-                                    videoList.add(v);
-
-                                }
-                                adapter.notifyDataSetChanged();
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -148,10 +130,7 @@ public class VideoActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-              //  VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Log.d("SN", error.getMessage());
-                hidePDialog();
-
+                bar.setVisibility(View.GONE);
             }
         });
 
@@ -190,19 +169,6 @@ public class VideoActivity extends AppCompatActivity {
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
     }
 
 

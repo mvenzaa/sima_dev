@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,15 +17,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 import com.venza.stopnarkoba.adapter.ArticleDetailAdapter;
 import com.venza.stopnarkoba.app.AppController;
-import com.venza.stopnarkoba.model.article;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Probook 4341s on 5/26/2016.
@@ -39,13 +38,13 @@ public class DetailArticle extends AppCompatActivity {
 
     // Movies json url
     private static final String url = "http://stopnarkoba.id/service/artikels/";
-    private ProgressDialog pDialog;
-    private List<article> articleList = new ArrayList<article>();
-    private ListView listView;
     NetworkImageView image;
     private ArticleDetailAdapter adapter;
 
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+    ProgressBar bar;
+    ParallaxScrollView content_artikel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +55,14 @@ public class DetailArticle extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        content_artikel = (ParallaxScrollView)findViewById(R.id.content_artikel);
+        bar = (ProgressBar) findViewById(R.id.loading_progress);
+        bar.setVisibility(View.VISIBLE);
+        content_artikel.setVisibility(View.GONE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Artikel");
 
-
-        pDialog = new ProgressDialog(this);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
 
         ID = (TextView)findViewById(R.id.ID);
         title = (TextView)findViewById(R.id.title);
@@ -85,7 +84,6 @@ public class DetailArticle extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        hidePDialog();
                         Log.d("SN", response.toString());
 
                         try {
@@ -97,6 +95,9 @@ public class DetailArticle extends AppCompatActivity {
                                     R.mipmap.ic_launcher, R.mipmap.ic_launcher));
                             image.setImageUrl(response.getString("image_large"), imageLoader);
 
+                            bar.setVisibility(View.GONE);
+                            content_artikel.setVisibility(View.VISIBLE);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("SN", response.toString());
@@ -106,10 +107,7 @@ public class DetailArticle extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //  VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Log.d("SN", error.getMessage());
-                hidePDialog();
-
+                bar.setVisibility(View.GONE);
             }
         });
 
@@ -118,20 +116,5 @@ public class DetailArticle extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(movieReq, "SN");
 
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
-    }
-
-
 
 }

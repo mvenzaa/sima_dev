@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -14,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.NetworkImageView;
+import com.nirhart.parallaxscroll.views.ParallaxScrollView;
 import com.venza.stopnarkoba.adapter.WargaListAdapter;
 import com.venza.stopnarkoba.app.AppController;
 import com.venza.stopnarkoba.model.warga;
@@ -38,13 +41,13 @@ public class DetailWarga extends AppCompatActivity {
 
     // Movies json url
     private static final String url = "http://stopnarkoba.id/service/user-profiles/";
-    private ProgressDialog pDialog;
-    private List<warga> wargaList = new ArrayList<warga>();
-    private ListView listView;
     NetworkImageView image;
     private WargaListAdapter adapter;
 
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+    ProgressBar bar;
+    ParallaxScrollView content_artikel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,13 @@ public class DetailWarga extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        content_artikel = (ParallaxScrollView)findViewById(R.id.content_artikel);
+        bar = (ProgressBar) findViewById(R.id.loading_progress);
+        bar.setVisibility(View.VISIBLE);
+        content_artikel.setVisibility(View.GONE);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Warga");
-
-        pDialog = new ProgressDialog(this);
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
 
         name = (TextView)findViewById(R.id.name);
         image = (NetworkImageView)findViewById(R.id.image_large);
@@ -79,7 +82,6 @@ public class DetailWarga extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d(TAG, response.toString());
-                        hidePDialog();
                         Log.d("SN", response.toString());
 
                         try {
@@ -88,6 +90,9 @@ public class DetailWarga extends AppCompatActivity {
                             imageLoader.get(response.getString("image_large"), ImageLoader.getImageListener(image,
                                     R.mipmap.ic_launcher, R.mipmap.ic_launcher));
                             image.setImageUrl(response.getString("image_large"), imageLoader);
+
+                            bar.setVisibility(View.GONE);
+                            content_artikel.setVisibility(View.VISIBLE);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -98,10 +103,7 @@ public class DetailWarga extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //  VolleyLog.d(TAG, "Error: " + error.getMessage());
-                Log.d("SN", error.getMessage());
-                hidePDialog();
-
+                bar.setVisibility(View.GONE);
             }
         });
 
@@ -111,19 +113,8 @@ public class DetailWarga extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
-    }
-
-
-
 }
+
+
+
+

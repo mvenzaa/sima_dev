@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -52,10 +53,11 @@ public class VideoFragment extends Fragment {
     // Movies json url
     private static final String url = "http://stopnarkoba.id/service/videos?page=";
     private Integer url_page_default = 1;
-    private ProgressDialog pDialog;
     private List<video> videoList = new ArrayList<video>();
     private ListView listView;
     private VideoListAdapter adapter;
+
+    ProgressBar bar;
 
     public VideoFragment() {
     }
@@ -93,13 +95,9 @@ public class VideoFragment extends Fragment {
                 startActivity(i);
             }
         });
-
-        pDialog = new ProgressDialog(getActivity());
-        // Showing progress dialog before making http request
-        pDialog.setMessage("Loading...");
-        pDialog.show();
+        bar = (ProgressBar) rootView.findViewById(R.id.loading_progress);
+        bar.setVisibility(View.VISIBLE);
         list("default");
-
         ((PullAndLoadListView) listView)
                 .setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
                     public void onRefresh() {
@@ -126,7 +124,6 @@ public class VideoFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        hidePDialog();
 
                         try {
                             if(type == "refresh"){
@@ -148,6 +145,8 @@ public class VideoFragment extends Fragment {
                                 }
                             }
                             adapter.notifyDataSetChanged();
+                            bar.setVisibility(View.GONE);
+
                             if(type == "refresh"){
                                 ((PullAndLoadListView) listView).onRefreshComplete();
                             }else{
@@ -162,25 +161,14 @@ public class VideoFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                hidePDialog();
+
             }
         });
         AppController.getInstance().addToRequestQueue(movieReq, "SN");
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        hidePDialog();
-    }
-
-    private void hidePDialog() {
-        if (pDialog != null) {
-            pDialog.dismiss();
-            pDialog = null;
-        }
-    }
-
 }
+
+
 
 
 
